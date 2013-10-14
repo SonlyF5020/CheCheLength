@@ -1,9 +1,9 @@
 
 public class MyLength {
     private final double value;
-    private final String unit;
+    private final MyUnit unit;
 
-    public MyLength(double value, String unit) {
+    public MyLength(double value, MyUnit unit) {
         this.value = value;
         this.unit = unit;
     }
@@ -15,22 +15,14 @@ public class MyLength {
     }
 
     private double baseValue() {
-        if (unit.equals("M")) {
-            return value * 100;
-        } else {
-            return value;
-        }
+        return value * unit.getRate();
     }
 
     public MyLength minus(MyLength length) {
-        if (unit.equals(length.unit)) {
-            return new MyLength(value - length.value, unit);
-        } else return new MyLength(baseValue() - length.baseValue(), "CM");
+        return new MyLength(baseValue() - length.baseValue(), MyUnit.CM);
     }
 
     public MyLength add(MyLength length) {
-        if (unit.equals(length.unit)) {
-            return new MyLength(value + length.value, unit);
-        } else return new MyLength(baseValue() + length.baseValue(), "CM");
+        return new MyLength(baseValue() + length.baseValue(), MyUnit.CM);
     }
 }
